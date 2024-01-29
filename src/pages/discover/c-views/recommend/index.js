@@ -1,13 +1,19 @@
-import React, { memo,useEffect } from 'react'
-import hyRequest from '@/service';
+import React, { memo, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import TopBanner from "./c-cpns/top-banner";
+import { fetchBannerDataAction } from "./store/recommend";
 const Recommend = () => {
-    useEffect(()=>{
-        hyRequest.get({url:'/banner'}).then((res)=>{console.log(res.banners)})
-    },[])
-    return (
-        <div>
-            <h2>推荐</h2>
-        </div>
-    )
-}
+  // 发起action
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBannerDataAction());
+    // eslint-disable-next-line
+  }, []);
+  return (
+    <div>
+      <TopBanner />
+      <h2>推荐</h2>
+    </div>
+  );
+};
 export default memo(Recommend);

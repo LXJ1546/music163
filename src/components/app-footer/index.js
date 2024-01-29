@@ -1,4 +1,4 @@
 import React, {memo} from 'react';
-export default memo(function JMAppFooter() {
-    return <h1>JMAppFooter</h1>;
+export default memo(function AppFooter() {
+    return <h1>AppFooter</h1>;
 })
