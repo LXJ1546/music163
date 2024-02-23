@@ -1,16 +1,17 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Slider } from "antd";
+import { message, Slider } from "antd";
 import {
   BarControl,
   BarOperator,
   BarPlayerInfo,
   PlayerBarWrapper,
 } from "./style";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getImageSize } from "@/utils/format";
 import { getSongPlayUrl } from "@/utils/handle-player";
 import { formatTime } from "@/utils/format";
+import { changeLyricIndexAction } from "../store/player";
 
 const AppPlayerBar = () => {
   const audioRef = useRef(null);
@@ -19,13 +20,15 @@ const AppPlayerBar = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setcurrentTime] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
-  const { currentSong } = useSelector(
+  const { currentSong, lyrics, lyricIndex } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
+      lyrics: state.player.lyrics,
+      lyricIndex: state.player.lyricIndex,
     }),
     shallowEqual
   );
-
+  const dispatch = useDispatch();
   /** 组件内的副作用操作 */
   useEffect(() => {
     audioRef.current.src = getSongPlayUrl(currentSong.id);
@@ -60,6 +63,25 @@ const AppPlayerBar = () => {
       setProgress(progress);
       setcurrentTime(currentTime);
     }
+
+    // 根据当前时间匹配对应的歌词
+    let index = lyrics.length - 1;
+    for (let i = 0; i < lyrics.length; i++) {
+      const lyric = lyrics[i];
+      if (lyric.alltime > currentTime) {
+        index = i - 1;
+        break;
+      }
+    }
+
+    // 匹配上歌词的索引后保存index
+    if (lyricIndex === index || index === -1) return;
+    dispatch(changeLyricIndexAction(index));
+    message.open({
+      content: lyrics[index].text,
+      key: "lyric",
+      duration: 0,
+    });
   }
 
   // 进度条点击

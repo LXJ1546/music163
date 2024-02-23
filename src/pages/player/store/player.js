@@ -14,10 +14,10 @@ export const fetchCurrentSongAction = createAsyncThunk(
     });
     // 获取歌词数据
     getSongLyric(id).then((res) => {
-      const lyricString =res.lrc.lyric
+      const lyricString = res.lrc.lyric;
       // 解析歌词成对象
-      const lyrics=parseLyric(lyricString)
-      dispatch(changeLyricsAction(lyrics))
+      const lyrics = parseLyric(lyricString);
+      dispatch(changeLyricsAction(lyrics));
     });
   }
 );
@@ -112,7 +112,8 @@ const playerSlice = createSlice({
       cp: 7001,
       publishTime: 1117555200000,
     },
-    lyrics:[]
+    lyrics: [],
+    lyricIndex: -1,
   },
   reducers: {
     changeCurrentSongAction(state, { payload }) {
@@ -121,8 +122,15 @@ const playerSlice = createSlice({
     changeLyricsAction(state, { payload }) {
       state.lyrics = payload;
     },
+    changeLyricIndexAction(state, { payload }) {
+      state.lyricIndex = payload;
+    },
   },
 });
 
-export const { changeCurrentSongAction,changeLyricsAction } = playerSlice.actions;
+export const {
+  changeCurrentSongAction,
+  changeLyricsAction,
+  changeLyricIndexAction,
+} = playerSlice.actions;
 export default playerSlice.reducer;
