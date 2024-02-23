@@ -7,13 +7,14 @@ const AppFooter = () => {
     <AppFooterWrapper>
       <div className="content wrap-v2">
         <div className="top">
-          {footerImages.map((item) => {
+          {footerImages.map((item, index) => {
             return (
               <div className="item" key={item.title}>
                 <a
+                  // className={`link link-${index}`}
                   className="link"
                   href={item.link}
-                  rel="noopener noreferrer"
+                  rel="noreferrer"
                   target="_blank"
                 ></a>
                 <span className="title">{item.title}</span>
