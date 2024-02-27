@@ -10,7 +10,7 @@ import { fetchCurrentSongAction } from './pages/player/store/player';
 export default memo(function App() {
   const dispatch=useDispatch()
   useEffect(()=>{
-    dispatch(fetchCurrentSongAction(5243776))
+    dispatch(fetchCurrentSongAction(29393634))
   },[])
   return (
     <div>

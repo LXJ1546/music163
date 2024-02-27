@@ -74,8 +74,11 @@ export const fetchRakingDataAction = createAsyncThunk(
     for (const id of rankingIds) {
       promises.push(getPlaylistDetail(id));
     }
+    // filter先判断是否有值
     Promise.all(promises).then((res) => {
-      const playlists = res.map((item) => item.playlist);
+      const playlists = res
+        .filter((item) => item.playlist) 
+        .map((item) => item.playlist);
       dispatch(changeRankingAction(playlists));
     });
   }
@@ -88,7 +91,7 @@ const recommendSlice = createSlice({
     hotRecommends: [],
     newAlbums: [],
     rankings: [],
-    settleSingers:[]
+    settleSingers: [],
   },
   reducers: {
     changeBannersAction(state, { payload }) {
@@ -125,6 +128,6 @@ export const {
   changeHotRecommendsAction,
   changeNewAlbumsAction,
   changeRankingAction,
-  changeSettleSingersAction
+  changeSettleSingersAction,
 } = recommendSlice.actions;
 export default recommendSlice.reducer;

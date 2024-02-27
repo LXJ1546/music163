@@ -130,6 +130,7 @@ export const BarOperator = styled.div`
   .btn {
     width: 25px;
     height: 25px;
+    cursor: pointer;
   }
 
   .left {
@@ -156,12 +157,36 @@ export const BarOperator = styled.div`
     padding-left: 13px;
     background-position: -147px -248px;
 
+    .volumeSlider {
+      position: absolute;
+      bottom: 36px;
+      left: 85px;
+      clear: both;
+      width: 32px;
+      height: 113px;
+      background-position: 0 -503px;
+
+      .ant-slider{
+        height:90px;
+        top:6px;
+      }
+    }
+
     .volume {
       background-position: -2px -248px;
     }
 
-    .loop {
-      background-position: -66px -248px;
+    .mode {
+      background-position: ${(props) => {
+        switch (props.playMode) {
+          case 0:
+            return "-3px -344px";
+          case 1:
+            return "-66px -248px";
+          default:
+            return "-66px -344px";
+        }
+      }};
     }
 
     .playlist {

@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { message, Slider } from "antd";
+import { message, Slider, Tooltip } from "antd";
 import {
   BarControl,
   BarOperator,
@@ -11,7 +11,11 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getImageSize } from "@/utils/format";
 import { getSongPlayUrl } from "@/utils/handle-player";
 import { formatTime } from "@/utils/format";
-import { changeLyricIndexAction } from "../store/player";
+import {
+  changeLyricIndexAction,
+  changeMusicAction,
+  changePlayModeAction,
+} from "../store/player";
 
 const AppPlayerBar = () => {
   const audioRef = useRef(null);
@@ -20,14 +24,16 @@ const AppPlayerBar = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setcurrentTime] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
-  const { currentSong, lyrics, lyricIndex } = useSelector(
+  const { currentSong, lyrics, lyricIndex, playMode } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
       lyrics: state.player.lyrics,
       lyricIndex: state.player.lyricIndex,
+      playMode: state.player.playMode,
     }),
     shallowEqual
   );
+  const modeText = ["循环", "随机", "单曲循环"];
   const dispatch = useDispatch();
   /** 组件内的副作用操作 */
   useEffect(() => {
@@ -84,6 +90,21 @@ const AppPlayerBar = () => {
     });
   }
 
+  // 歌曲切换
+  function handleChangeMusic(isNext = true) {
+    dispatch(changeMusicAction(isNext));
+  }
+
+  // 歌曲播放结束后切换
+  function handleTimeEnded() {
+    if (playMode === 2) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    } else {
+      handleChangeMusic(true);
+    }
+  }
+
   // 进度条点击
   function handleSliderChanged(value) {
     // 获取点击位置的时间
@@ -93,6 +114,15 @@ const AppPlayerBar = () => {
     setcurrentTime(currentTime);
     setProgress(value);
     setIsSliding(false);
+  }
+
+  // 播放模式切换
+  function handleChangePlayMode() {
+    let newMode = playMode + 1;
+    if (newMode > 2) {
+      newMode = 0;
+    }
+    dispatch(changePlayModeAction(newMode));
   }
 
   // 进度条拖拽
@@ -110,12 +140,18 @@ const AppPlayerBar = () => {
     <PlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
         <BarControl isPlaying={isPlaying}>
-          <button className="btn sprite_playbar prev"></button>
+          <button
+            className="btn sprite_playbar prev"
+            onClick={() => handleChangeMusic(false)}
+          ></button>
           <button
             className="btn sprite_playbar play"
             onClick={handlePlayBtnClick}
           ></button>
-          <button className="btn sprite_playbar next"></button>
+          <button
+            className="btn sprite_playbar next"
+            onClick={() => handleChangeMusic()}
+          ></button>
         </BarControl>
         <BarPlayerInfo>
           <Link to="/palyer">
@@ -147,20 +183,32 @@ const AppPlayerBar = () => {
             </div>
           </div>
         </BarPlayerInfo>
-        <BarOperator>
+        <BarOperator playMode={playMode}>
           <div className="left">
             <button className="btn pip"></button>
             <button className="btn sprite_playbar favor"></button>
             <button className="btn sprite_playbar share"></button>
           </div>
           <div className="right sprite_playbar">
+            <div className="volumeSlider sprite_playbar">
+              <Slider min={0} max={100} vertical={true} />
+            </div>
             <button className="btn sprite_playbar volume"></button>
-            <button className="btn sprite_playbar loop"></button>
+            <Tooltip title={modeText[playMode]} showArrow={false}>
+              <button
+                className="btn sprite_playbar mode"
+                onClick={handleChangePlayMode}
+              ></button>
+            </Tooltip>
             <button className="btn sprite_playbar playlist"></button>
           </div>
         </BarOperator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} />
+      <audio
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleTimeEnded}
+      />
     </PlayerBarWrapper>
   );
 };

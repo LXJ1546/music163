@@ -1,11 +1,18 @@
 import React, { memo } from "react";
 import { RankingItemWrapper } from "./style";
 import { getImageSize } from "@/utils/format";
+import { useDispatch } from "react-redux";
+import { fetchCurrentSongAction } from "../../../../../player/store/player";
 
 const TopRankingItem = (props) => {
   const { itemData } = props;
   //tracks不一定有值
   const { tracks = [] } = itemData;
+  const dispatch = useDispatch();
+  function handlePlayClick(id) {
+    dispatch(fetchCurrentSongAction(id));
+  }
+
   return (
     <RankingItemWrapper>
       <div className="header">
@@ -27,7 +34,10 @@ const TopRankingItem = (props) => {
               <div className="info">
                 <div className="name">{item.name}</div>
                 <div className="operator">
-                  <button className="btn sprite_02 play"></button>
+                  <button
+                    className="btn sprite_02 play"
+                    onClick={() => handlePlayClick(item.id)}
+                  ></button>
                   <button className="btn sprite_icon2 addto"></button>
                   <button className="btn sprite_02 favor"></button>
                 </div>
@@ -37,7 +47,9 @@ const TopRankingItem = (props) => {
         })}
       </div>
       <div className="footer">
-        <a href="#/discover/ranking" alt="">查看全部&gt;</a>
+        <a href="#/discover/ranking" alt="">
+          查看全部&gt;
+        </a>
       </div>
     </RankingItemWrapper>
   );
