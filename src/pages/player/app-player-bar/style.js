@@ -166,9 +166,26 @@ export const BarOperator = styled.div`
       height: 113px;
       background-position: 0 -503px;
 
-      .ant-slider{
-        height:90px;
-        top:6px;
+      .ant-slider {
+        height: 90px;
+        top: 6px;
+
+        .ant-slider-track {
+          background: url(${require("@/assets/img/playbar_sprite.png")});
+          background-position: -40px bottom;
+        }
+
+        .ant-slider-handle {
+          width: 18px;
+          height: 20px;
+          border: none;
+          left: 2px;
+          background: url(${require("@/assets/img/iconall.png")});
+          background-position: -40px -250px;
+          :hover {
+            background-position: -40px -280px;
+          }
+        }
       }
     }
 

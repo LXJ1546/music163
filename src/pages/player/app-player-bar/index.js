@@ -24,6 +24,8 @@ const AppPlayerBar = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setcurrentTime] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
+  // 音量控制，显示与隐藏状态
+  const [isVisible, setIsVisible] = useState(false); // 初始状态为可见
   const { currentSong, lyrics, lyricIndex, playMode } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
@@ -34,6 +36,7 @@ const AppPlayerBar = () => {
     shallowEqual
   );
   const modeText = ["循环", "随机", "单曲循环"];
+  const visibilityStyle = { visibility: isVisible ? "visible" : "hidden" }; // 根据isVisible状态设置visibility属性
   const dispatch = useDispatch();
   /** 组件内的副作用操作 */
   useEffect(() => {
@@ -116,6 +119,11 @@ const AppPlayerBar = () => {
     setIsSliding(false);
   }
 
+  // 音量键点击
+  function handleVolumeClick() {
+    setIsVisible(!isVisible);
+  }
+
   // 播放模式切换
   function handleChangePlayMode() {
     let newMode = playMode + 1;
@@ -190,10 +198,16 @@ const AppPlayerBar = () => {
             <button className="btn sprite_playbar share"></button>
           </div>
           <div className="right sprite_playbar">
-            <div className="volumeSlider sprite_playbar">
+            <div
+              className="volumeSlider sprite_playbar"
+              style={visibilityStyle}
+            >
               <Slider min={0} max={100} vertical={true} />
             </div>
-            <button className="btn sprite_playbar volume"></button>
+            <button
+              className="btn sprite_playbar volume"
+              onClick={handleVolumeClick}
+            ></button>
             <Tooltip title={modeText[playMode]} showArrow={false}>
               <button
                 className="btn sprite_playbar mode"
