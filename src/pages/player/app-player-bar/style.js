@@ -38,6 +38,9 @@ export const BarControl = styled.div`
 
   .prev {
     background-position: 0 -130px;
+    &:hover {
+      background-position: -30px -130px;
+    }
   }
 
   .play {
@@ -49,6 +52,9 @@ export const BarControl = styled.div`
 
   .next {
     background-position: -80px -130px;
+    &:hover {
+      background-position: -110px -130px;
+    }
   }
 `;
 
@@ -140,14 +146,23 @@ export const BarOperator = styled.div`
 
   .pip {
     background: url(${require("@/assets/img/pip_icon")});
+    &:hover {
+      background-position-y: -25px;
+    }
   }
 
   .favor {
     background-position: -88px -163px;
+    &:hover {
+      background-position: -88px -189px;
+    }
   }
 
   .share {
     background-position: -114px -163px;
+    &:hover {
+      background-position: -114px -189px;
+    }
   }
 
   .right {
@@ -182,7 +197,7 @@ export const BarOperator = styled.div`
           left: 2px;
           background: url(${require("@/assets/img/iconall.png")});
           background-position: -40px -250px;
-          :hover {
+          &:hover {
             background-position: -40px -280px;
           }
         }
@@ -191,6 +206,9 @@ export const BarOperator = styled.div`
 
     .volume {
       background-position: -2px -248px;
+      &:hover {
+        background-position: -31px -248px;
+      }
     }
 
     .mode {
@@ -204,6 +222,19 @@ export const BarOperator = styled.div`
             return "-66px -344px";
         }
       }};
+
+      &:hover {
+        background-position: ${(props) => {
+          switch (props.playMode) {
+            case 0:
+              return "-33px -344px";
+            case 1:
+              return "-93px -248px";
+            default:
+              return "-93px -344px";
+          }
+        }};
+      }
     }
 
     .playlist {
@@ -212,6 +243,9 @@ export const BarOperator = styled.div`
       color: #ccc;
       width: 59px;
       background-position: -42px -68px;
+      &:hover {
+        background-position: -42px -98px;
+      }
     }
   }
 `;

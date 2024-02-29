@@ -124,6 +124,11 @@ const AppPlayerBar = () => {
     setIsVisible(!isVisible);
   }
 
+  // 音量键调整音量
+  function handleVolumeChange(value) {
+    audioRef.current.volume=value*0.01
+  }
+
   // 播放模式切换
   function handleChangePlayMode() {
     let newMode = playMode + 1;
@@ -202,7 +207,7 @@ const AppPlayerBar = () => {
               className="volumeSlider sprite_playbar"
               style={visibilityStyle}
             >
-              <Slider min={0} max={100} vertical={true} />
+              <Slider min={0} max={100} vertical={true} defaultValue={100} onChange={handleVolumeChange}/>
             </div>
             <button
               className="btn sprite_playbar volume"
