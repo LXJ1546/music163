@@ -152,7 +152,7 @@ const AppPlayerBar = () => {
   return (
     <PlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
-        <BarControl isPlaying={isPlaying}>
+        <BarControl $isPlaying={isPlaying}>
           <button
             className="btn sprite_playbar prev"
             onClick={() => handleChangeMusic(false)}
@@ -196,7 +196,7 @@ const AppPlayerBar = () => {
             </div>
           </div>
         </BarPlayerInfo>
-        <BarOperator playMode={playMode}>
+        <BarOperator $playMode={playMode}>
           <div className="left">
             <button className="btn pip"></button>
             <button className="btn sprite_playbar favor"></button>

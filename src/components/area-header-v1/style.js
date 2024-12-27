@@ -16,7 +16,7 @@ export const HeaderV1Wrapper = styled.div`
 
     .title {
       font-size: 20px;
-      font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;
+      font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
       margin-right: 20px;
     }
 
@@ -53,7 +53,7 @@ export const HeaderV1Wrapper = styled.div`
     align-items: center;
     .more {
       &:hover {
-        text:decoration: underline;
+        text-decoration: underline;
         color: #333;
       }
     }

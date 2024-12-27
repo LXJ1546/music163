@@ -47,7 +47,8 @@ export const BarControl = styled.div`
     width: 36px;
     height: 36px;
     margin: 0 8px;
-    background-position: 0 ${(props) => (props.isPlaying ? "-165px" : "-204px")};
+    background-position: 0
+      ${({ $isPlaying }) => ($isPlaying ? "-165px" : "-204px")};
   }
 
   .next {
@@ -212,8 +213,8 @@ export const BarOperator = styled.div`
     }
 
     .mode {
-      background-position: ${(props) => {
-        switch (props.playMode) {
+      background-position: ${({ $playMode }) => {
+        switch ($playMode) {
           case 0:
             return "-3px -344px";
           case 1:
@@ -224,8 +225,8 @@ export const BarOperator = styled.div`
       }};
 
       &:hover {
-        background-position: ${(props) => {
-          switch (props.playMode) {
+        background-position: ${({ $playMode }) => {
+          switch ($playMode) {
             case 0:
               return "-33px -344px";
             case 1:

@@ -6,7 +6,7 @@ const SongMenuItem = (props) => {
   const { itemData } = props;
   return (
     <MenuItemWrapper>
-      <div className="top ">
+      <div className="top">
         <img src={getImageSize(itemData.picUrl, 140)} alt="" />
         <div className="cover sprite_cover">
           <div className="info sprite_cover">

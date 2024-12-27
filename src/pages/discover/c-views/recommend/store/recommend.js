@@ -77,7 +77,7 @@ export const fetchRakingDataAction = createAsyncThunk(
     // filter先判断是否有值
     Promise.all(promises).then((res) => {
       const playlists = res
-        .filter((item) => item.playlist) 
+        .filter((item) => item.playlist)
         .map((item) => item.playlist);
       dispatch(changeRankingAction(playlists));
     });
@@ -107,7 +107,11 @@ const recommendSlice = createSlice({
       state.rankings = payload;
     },
     changeSettleSingersAction(state, { payload }) {
-      state.settleSingers = payload;
+      // 返回一个新的状态对象，确保不修改原始状态中的引用
+      return {
+        ...state,
+        settleSingers: payload,
+      };
     },
   },
   //   extraReducers: (builder) => {

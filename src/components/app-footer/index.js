@@ -16,7 +16,7 @@ const AppFooter = () => {
                   href={item.link}
                   rel="noreferrer"
                   target="_blank"
-                  title="footer"
+                  title={item.title}
                 ></a>
                 <span className="title">{item.title}</span>
               </div>
