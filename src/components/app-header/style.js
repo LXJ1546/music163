@@ -17,7 +17,6 @@ export const HeaderWrapper = styled.div`
 
 export const HeaderLeft = styled.div`
   display: flex;
-
   .logo {
     display: block;
     width: 176px;
@@ -40,7 +39,7 @@ export const HeaderLeft = styled.div`
       /* 最后一个元素也就是“下载客户端” 的样式，其中after代表伪元素，也就是那个hot标记*/
       :last-of-type a {
         position: relative;
-        ::after {
+        &::after {
           position: absolute;
           content: "";
           width: 28px;
@@ -64,6 +63,7 @@ export const HeaderLeft = styled.div`
         width: 12px;
         height: 7px;
         bottom: -1px;
+        /* 水平居中 */
         left: 50%;
         transform: translate(-50%, 0);
         background-position: -226px 0;

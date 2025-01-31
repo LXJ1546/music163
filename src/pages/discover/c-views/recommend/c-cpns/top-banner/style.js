@@ -47,8 +47,7 @@ export const BannerLeft = styled.div`
   }
 `;
 export const BannerRight = styled.a.attrs({
-  href: "https://music.163.com/#/download",
-  target: "_blank",
+  href: "/#/download",
 })`
   width: 254px;
   height: 270px;

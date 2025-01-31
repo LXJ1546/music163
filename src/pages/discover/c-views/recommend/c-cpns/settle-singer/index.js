@@ -1,13 +1,13 @@
 import React, { memo } from "react";
 import { SettleSingerWrapper } from "./style";
 import AreaHeaderV2 from "@/components/area-header-v2";
-import { useSelector } from "react-redux";
+import { useSelector,shallowEqual } from "react-redux";
 import { getImageSize } from "@/utils/format";
 
 const SettleSinger = () => {
   const { settleSingers } = useSelector((state) => ({
     settleSingers: state.recommend.settleSingers,
-  }));
+  }),shallowEqual);
   return (
     <SettleSingerWrapper>
       <AreaHeaderV2

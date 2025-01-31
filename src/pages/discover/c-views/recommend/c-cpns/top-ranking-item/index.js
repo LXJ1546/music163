@@ -9,6 +9,7 @@ const TopRankingItem = (props) => {
   //tracks不一定有值
   const { tracks = [] } = itemData;
   const dispatch = useDispatch();
+  // 发送action，用来播放歌曲
   function handlePlayClick(id) {
     dispatch(fetchCurrentSongAction(id));
   }
@@ -18,7 +19,7 @@ const TopRankingItem = (props) => {
       <div className="header">
         <div className="image">
           <img src={getImageSize(itemData.coverImgUrl, 80)} alt="" />
-          <a className="cover sprite_cover" href="/#" title={itemData.name}></a>
+          <a className="cover sprite_cover" href="#/discover/ranking" title={itemData.name}></a>
         </div>
         <div className="info">
           <div className="name">{itemData.name}</div>

@@ -25,7 +25,9 @@ const AppPlayerBar = () => {
   const [currentTime, setcurrentTime] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
   // 音量控制，显示与隐藏状态
-  const [isVisible, setIsVisible] = useState(false); // 初始状态为可见
+  const [isVisible, setIsVisible] = useState(false);
+  // 使用一个状态记录是否进行了第一次播放
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const { currentSong, lyrics, lyricIndex, playMode } = useSelector(
     (state) => ({
       currentSong: state.player.currentSong,
@@ -36,33 +38,40 @@ const AppPlayerBar = () => {
     shallowEqual
   );
   const modeText = ["循环", "随机", "单曲循环"];
+  //音乐调整栏的显示与隐藏
   const visibilityStyle = { visibility: isVisible ? "visible" : "hidden" }; // 根据isVisible状态设置visibility属性
   const dispatch = useDispatch();
   /** 组件内的副作用操作 */
   useEffect(() => {
     audioRef.current.src = getSongPlayUrl(currentSong.id);
-    audioRef.current
-      .play()
-      .then(() => {
-        setIsPlaying(true);
-        console.log("歌曲播放成功");
-      })
-      .catch((err) => {
-        setIsPlaying(false);
-        console.log("歌曲播放失败", err);
-      });
+    // 已经播放了一次之后，后面的都会自动播放
+    if (hasPlayedOnce) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          console.log("歌曲播放成功");
+        })
+        .catch((err) => {
+          setIsPlaying(false);
+          console.log("歌曲播放失败", err);
+        });
+    }
     //获取歌曲总时间
     setDuration(currentSong.dt);
-  }, [currentSong]);
-
+  }, [currentSong, hasPlayedOnce]);
+  // 控制歌曲播放还是暂停
   function handlePlayBtnClick() {
+    if (!hasPlayedOnce) {
+      setHasPlayedOnce(true);
+    }
     isPlaying
       ? audioRef.current.pause()
       : audioRef.current.play().catch(() => setIsPlaying(false));
     setIsPlaying(!isPlaying);
   }
 
-  /** 音乐播放进度处理 */
+  /** 音乐播放进度处理，播放时滚动条显示进度 */
   function handleTimeUpdate() {
     // 获取当前播放时间
     const currentTime = audioRef.current.currentTime * 1000;
@@ -95,7 +104,14 @@ const AppPlayerBar = () => {
 
   // 歌曲切换
   function handleChangeMusic(isNext = true) {
-    dispatch(changeMusicAction(isNext));
+    if (playMode === 2) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+      // 单曲循环时，如果一开始没有播放，而是直接切换歌曲，需要将播放状态设为true
+      setIsPlaying(true);
+    } else {
+      dispatch(changeMusicAction(isNext));
+    }
   }
 
   // 歌曲播放结束后切换
@@ -104,7 +120,7 @@ const AppPlayerBar = () => {
       audioRef.current.currentTime = 0;
       audioRef.current.play();
     } else {
-      handleChangeMusic(true);
+      dispatch(changeMusicAction(true));
     }
   }
 
@@ -126,7 +142,7 @@ const AppPlayerBar = () => {
 
   // 音量键调整音量
   function handleVolumeChange(value) {
-    audioRef.current.volume=value*0.01
+    audioRef.current.volume = value * 0.01;
   }
 
   // 播放模式切换
@@ -167,7 +183,7 @@ const AppPlayerBar = () => {
           ></button>
         </BarControl>
         <BarPlayerInfo>
-          <Link to="/palyer">
+          <Link to="/#">
             <img
               className="image"
               src={getImageSize(currentSong?.al?.picUrl, 34)}
@@ -207,7 +223,13 @@ const AppPlayerBar = () => {
               className="volumeSlider sprite_playbar"
               style={visibilityStyle}
             >
-              <Slider min={0} max={100} vertical={true} defaultValue={100} onChange={handleVolumeChange}/>
+              <Slider
+                min={0}
+                max={100}
+                vertical={true}
+                defaultValue={100}
+                onChange={handleVolumeChange}
+              />
             </div>
             <button
               className="btn sprite_playbar volume"

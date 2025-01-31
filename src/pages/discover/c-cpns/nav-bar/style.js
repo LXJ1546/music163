@@ -6,14 +6,14 @@ export const NavWrapper = styled.div`
 
   .nav {
     display: flex;
-    padding-left: 180px;
+    padding-left: 180px; 
     position: relative;
     top: -4px;
 
     .item {
+      
       a {
         display: inline-block;
-        height: 20px;
         line-height: 20px;
         padding: 0 13px;
         margin: 7px 17px 0;

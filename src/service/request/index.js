@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 // 拦截器: 蒙版Loading/token/修改配置
 
@@ -13,45 +13,54 @@ import axios from 'axios'
  */
 
 class HYRequest {
-  
   // request实例 => axios的实例
   constructor(config) {
-    this.instance = axios.create(config)
+    this.instance = axios.create(config);
 
     // 每个instance实例都添加拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        // loading/token
-        return config
+        // 这里可以加loading、token等逻辑
+        // 如果有请求配置成功的回调函数，执行
+        return config;
       },
       (err) => {
-        return err
+        // 请求失败的处理
+        return err;
       }
-    )
+    );
     this.instance.interceptors.response.use(
       (res) => {
-        return res.data
+        return res.data;
       },
       (err) => {
-        return err
+        return err;
       }
-    )
+    );
 
-    // 针对特定的hyRequest实例添加拦截器
-    this.instance.interceptors.request.use(
-      config.interceptors?.requestSuccessFn,
-      config.interceptors?.requestFailureFn
-    )
-    this.instance.interceptors.response.use(
-      config.interceptors?.responseSuccessFn,
-      config.interceptors?.responseFailureFn
-    )
+    // 针对特定实例的拦截器
+    if (config.interceptors) {
+      // 添加请求成功、失败拦截
+      if (config.interceptors.requestSuccessFn) {
+        this.instance.interceptors.request.use(
+          config.interceptors.requestSuccessFn,
+          config.interceptors.requestFailureFn
+        );
+      }
+      // 添加响应成功、失败拦截
+      if (config.interceptors.responseSuccessFn) {
+        this.instance.interceptors.response.use(
+          config.interceptors.responseSuccessFn,
+          config.interceptors.responseFailureFn
+        );
+      }
+    }
   }
 
   // 封装网络请求的方法
   request(config) {
     // 单次请求的成功拦截处理
-    if (config.interceptors?.requestSuccessFn) {
+    if (config.interceptors && config.interceptors.requestSuccessFn) {
       config = config.interceptors.requestSuccessFn(config)
     }
 
@@ -61,29 +70,29 @@ class HYRequest {
         .request(config)
         .then((res) => {
           // 单词响应的成功拦截处理
-          if (config.interceptors?.responseSuccessFn) {
+          if (config.interceptors && config.interceptors.responseSuccessFn) {
             res = config.interceptors.responseSuccessFn(res)
           }
-          resolve(res)
+          resolve(res);
         })
         .catch((err) => {
-          reject(err)
-        })
-    })
+          reject(err);
+        });
+    });
   }
 
   get(config) {
-    return this.request({ ...config, method: 'GET' })
+    return this.request({ ...config, method: "GET" });
   }
   post(config) {
-    return this.request({ ...config, method: 'POST' })
+    return this.request({ ...config, method: "POST" });
   }
   delete(config) {
-    return this.request({ ...config, method: 'DELETE' })
+    return this.request({ ...config, method: "DELETE" });
   }
   patch(config) {
-    return this.request({ ...config, method: 'PATCH' })
+    return this.request({ ...config, method: "PATCH" });
   }
 }
 
-export default HYRequest
+export default HYRequest;

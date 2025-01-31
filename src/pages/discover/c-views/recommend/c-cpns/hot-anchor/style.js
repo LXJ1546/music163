@@ -27,7 +27,6 @@ export const HotAnchorWrapper = styled.div`
 
         .position {
           color: #666;
-
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;

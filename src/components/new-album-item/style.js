@@ -21,7 +21,6 @@ export const AlbumItemWrapper = styled.div`
       top: 0;
       bottom: 0;
       background-position: 0 -570px;
-      text-indent: -9999px;
     }
   }
   .bottom {

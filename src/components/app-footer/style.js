@@ -14,13 +14,13 @@ export const AppFooterWrapper = styled.div`
   .top {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 33px;
-    margin-right: 80px;
+    margin-left:40px;
+    margin-right: 40px;
 
     .item {
       width: 45px;
-      margin-left: 80px;
       text-align: center;
       color: #666;
 

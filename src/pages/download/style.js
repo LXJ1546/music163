@@ -113,7 +113,6 @@ export const TopWrapper = styled.div`
 
       .right {
         position: relative;
-        display: inline-block;
         margin-left: 220px;
         width: 300px;
         height: 100%;

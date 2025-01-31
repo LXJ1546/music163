@@ -10,10 +10,10 @@ export function getSongDetail(ids) {
 }
 
 export function getSongLyric(id) {
-    return hyRequest.get({
-      url: "/lyric",
-      params: {
-        id,
-      },
-    });
-  }
+  return hyRequest.get({
+    url: "/lyric",
+    params: {
+      id,
+    },
+  });
+}

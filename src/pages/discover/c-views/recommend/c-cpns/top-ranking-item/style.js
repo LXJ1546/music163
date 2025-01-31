@@ -8,7 +8,6 @@ export const RankingItemWrapper = styled.div`
   .header {
     height: 100px;
     display: flex;
-
     margin: 20px 0 0 20px;
 
     .image {
@@ -71,15 +70,13 @@ export const RankingItemWrapper = styled.div`
   }
 
   .list {
+    .item:nth-child(-n + 3) .index {
+      color: #c10d0c;
+    }
     .item {
-      position: relative;
       display: flex;
       align-items: center;
       height: 32px;
-
-      .index:nth-child(-n + 3) {
-        color: #c10d0c;
-      }
 
       .index {
         width: 35px;
@@ -109,8 +106,6 @@ export const RankingItemWrapper = styled.div`
         }
 
         .operator {
-          display: flex;
-          align-items: center;
           display: none;
           width: 82px;
 

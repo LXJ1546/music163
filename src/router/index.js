@@ -1,69 +1,65 @@
 // src/router->index.js  (配置路由映射)
 import React, { lazy } from "react";
-import { Navigate } from "react-router-dom";
 
-const Mine = lazy(() => import('@/pages/mine'));
-const Focus = lazy(() => import('@/pages/focus'));
-const Download = lazy(() => import('@/pages/download'));
-const Discover = lazy(() => import('@/pages/discover'));
-const Recommend = lazy(() => import('@/pages/discover/c-views/recommend'));
-const Songs = lazy(() => import('@/pages/discover/c-views/songs'));
-const Ranking = lazy(() => import('@/pages/discover/c-views/ranking'));
-const Djradio = lazy(() => import('@/pages/discover/c-views/djradio'));
-const Artist = lazy(() => import('@/pages/discover/c-views/artist'));
-const Album = lazy(() => import('@/pages/discover/c-views/album'));
+// 路由懒加载，动态导入
+const Mine = lazy(() => import("@/pages/mine"));
+const Focus = lazy(() => import("@/pages/focus"));
+const Download = lazy(() => import("@/pages/download"));
+const Discover = lazy(() => import("@/pages/discover"));
+const Recommend = lazy(() => import("@/pages/discover/c-views/recommend"));
+const Songs = lazy(() => import("@/pages/discover/c-views/songs"));
+const Ranking = lazy(() => import("@/pages/discover/c-views/ranking"));
+const Djradio = lazy(() => import("@/pages/discover/c-views/djradio"));
+const Artist = lazy(() => import("@/pages/discover/c-views/artist"));
+const Album = lazy(() => import("@/pages/discover/c-views/album"));
 
 const routes = [
   {
     path: "/",
-    element: <Navigate to="/discover" />
-  },
-  {
-    path: "/discover",
-    element: <Discover/>,
+    element: <Discover />,
     children: [
       {
-        path: "/discover",
-        element: <Navigate to="/discover/recommend" />
+        index: true, // 表示默认子路由
+        element: <Recommend />, // 默认展示 Recommend 组件
       },
       {
         path: "/discover/recommend",
-        element: <Recommend />
+        element: <Recommend />,
       },
       {
         path: "/discover/songs",
-        element: <Songs />
+        element: <Songs />,
       },
       {
         path: "/discover/ranking",
-        element: <Ranking />
+        element: <Ranking />,
       },
       {
         path: "/discover/djradio",
-        element: <Djradio />
+        element: <Djradio />,
       },
       {
         path: "/discover/artist",
-        element: <Artist />
+        element: <Artist />,
       },
       {
         path: "/discover/album",
-        element: <Album />
-      }
-    ]
+        element: <Album />,
+      },
+    ],
   },
   {
     path: "/mine",
-    element: <Mine />
+    element: <Mine />,
   },
   {
     path: "/focus",
-    element: <Focus />
+    element: <Focus />,
   },
   {
     path: "/download",
-    element: <Download />
-  }
+    element: <Download />,
+  },
 ];
 
 export default routes;

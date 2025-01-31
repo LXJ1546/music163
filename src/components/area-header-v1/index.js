@@ -3,7 +3,7 @@ import { HeaderV1Wrapper } from "./style";
 import { Link } from "react-router-dom";
 
 const AreaHeaderV1 = (props) => {
-  const {title="默认标题",keywords=[],moreText="更多",moreLink='/'}=props
+  const {title="默认标题",keywords=[],moreText="更多",moreLink='/discover/songs'}=props
   return (
     <HeaderV1Wrapper className="sprite_02">
       <div className="left">

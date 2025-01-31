@@ -6,7 +6,7 @@ const Discover = () => {
   return (
     <div>
       <NavBar />
-      <Suspense fallback="">
+      <Suspense fallback=''>
         <Outlet />
       </Suspense>
     </div>

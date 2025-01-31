@@ -9,7 +9,7 @@ const NavBar = () => {
         {discoverMenu.map((item) => {
           return (
             <div className="item" key={item.title}>
-              <NavLink to={item.link}>{item.title}</NavLink>
+              <NavLink to={item.link} >{item.title}</NavLink>
             </div>
           );
         })}
