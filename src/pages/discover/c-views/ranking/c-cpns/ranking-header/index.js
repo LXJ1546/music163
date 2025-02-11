@@ -4,30 +4,32 @@ import { formatMonthDay } from "@/utils/format";
 import { RankingHeaderWrapper } from "./style";
 import SongOperationBar from "@/components/song-operation-bar";
 const RankingHeader = () => {
-  const { rankingPlayList } = useSelector(
+  const { rankingList, listIndex } = useSelector(
     (state) => ({
-      rankingPlayList: state.ranking.playList,
+      rankingList: state.ranking.list,
+      listIndex: state.ranking.listIndex,
     }),
     shallowEqual
   );
   return (
     <RankingHeaderWrapper>
       <div className="image">
-        <img src={rankingPlayList.coverImgUrl} alt="" />
+        <img src={rankingList[listIndex]?.coverImgUrl} alt="" />
         <span className="sprite_cover msk"></span>
       </div>
       <div className="info">
-        <div className="title">{rankingPlayList.name}</div>
+        <div className="title">{rankingList[listIndex]?.name}</div>
         <div className="time">
           <i className="clock sprite_icon2"></i>
-          <div>最近更新：{formatMonthDay(rankingPlayList.updateTime)}</div>
-          <div className="update">(刚刚更新)</div>
+          <div>
+            最近更新：{formatMonthDay(rankingList[listIndex]?.updateTime)}
+          </div>
+          <div className="update">
+            {`(${rankingList[listIndex]?.updateFrequency})`}
+          </div>
         </div>
         <SongOperationBar
-          favorTitle={`(${rankingPlayList.subscribedCount})`}
-          shareTitle={`(${rankingPlayList.shareCount})`}
-          downloadTitle="下载"
-          commentTitle={`(${rankingPlayList.commentCount})`}
+          favorTitle={`(${rankingList[listIndex]?.subscribedCount})`}
         />
       </div>
     </RankingHeaderWrapper>

@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { TopRankingWrapper } from "./style";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { getImageSize } from "@/utils/format";
-import { fetchPlayListDataAction } from "../../store";
+import { fetchPlayListDataAction, changeListIndexAction } from "../../store";
 const TopRanking = () => {
   const [currentIndex, setCurrrentIndex] = useState(0);
   const { rankingList } = useSelector(
@@ -15,17 +15,15 @@ const TopRanking = () => {
   // 点击事件，用于切换榜单的详情数据
   const handleItemClick = (index) => {
     setCurrrentIndex(index);
-    const id = rankingList[0].id;
-    dispatch(fetchPlayListDataAction(id));
+    dispatch(changeListIndexAction(index));
   };
   useEffect(() => {
     if (rankingList && rankingList[currentIndex]) {
       const id = rankingList[currentIndex].id;
       dispatch(fetchPlayListDataAction(id));
     }
-    console.log(rankingList)
-    // eslint-disable-next-line
-  }, [rankingList,currentIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, rankingList]);
   return (
     <TopRankingWrapper>
       {rankingList.map((item, index) => {

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { OperationBarWrapper } from "./style";
 const SongOperationBar = (props) => {
-  const { favorTitle, shareTitle, downloadTitle, commentTitle } = props;
+  const { favorTitle, shareTitle='未知', downloadTitle='下载', commentTitle='未知' } = props;
   return (
     <OperationBarWrapper>
       <span className="play">

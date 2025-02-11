@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import TopRanking from "./c-cpns/top-ranking";
 import RankingHeader from "./c-cpns/ranking-header";
 import RankingList from "./c-cpns/ranking-list";
-import {fetchTopRankingDataAction} from "./store/index"
+import { fetchTopRankingDataAction } from "./store/index";
 const Ranking = () => {
   // 发起action
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ const Ranking = () => {
       <RankingRight>
         <RankingHeader />
         <RankingList />
-        right
       </RankingRight>
     </RankingWrapper>
   );

@@ -24,6 +24,7 @@ const rankingSlice = createSlice({
   initialState: {
     list: [],
     playList: {},
+    listIndex: 0,
   },
   reducers: {
     changeRankingAction(state, { payload }) {
@@ -32,8 +33,14 @@ const rankingSlice = createSlice({
     changePlayListAction(state, { payload }) {
       state.playList = payload.playlist;
     },
+    changeListIndexAction(state, { payload }) {
+      state.listIndex = payload;
+    },
   },
 });
-export const { changeRankingAction, changePlayListAction } =
-  rankingSlice.actions;
+export const {
+  changeRankingAction,
+  changePlayListAction,
+  changeListIndexAction,
+} = rankingSlice.actions;
 export default rankingSlice.reducer;

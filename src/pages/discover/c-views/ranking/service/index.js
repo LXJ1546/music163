@@ -7,7 +7,7 @@ export function getRanking() {
 // 获取榜单详细数据
 export function getRankingList(id) {
   return hyRequest.get({
-    url: "/toplist/detail",
+    url: "/playlist/detail",
     params: {
       id,
     },
